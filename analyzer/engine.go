@@ -212,6 +212,7 @@ func packetToEvent(packet gopacket.Packet) Event {
 				if len(dns.Questions) > 0 {
 					event.DNSQuery = string(dns.Questions[0].Name)
 					event.DNSQueryType = dns.Questions[0].Type.String()
+					event.DNSQueryTypeCode = int(dns.Questions[0].Type)
 				}
 				if len(dns.Answers) > 0 {
 					for _, answer := range dns.Answers {

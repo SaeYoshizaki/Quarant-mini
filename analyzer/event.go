@@ -24,8 +24,9 @@ type Event struct {
 	Risk                 []string `json:"risk,omitempty"`
 	DNSQuery             string   `json:"dns_query,omitempty"` // DNS response: true, DNS query: false
 	DNSQueryType         string   `json:"dns_query_type,omitempty"`
-	DNSIsResponse        bool     `json:"dns_is_response"`       // DNSには何を調べたいかのタイプがある（詳しくはmemo.mdに）
-	DNSAnswers           []string `json:"dns_answers,omitempty"` // DNSから返答があったIPアドレス
+	DNSIsResponse        bool     `json:"dns_is_response"`               // DNSには何を調べたいかのタイプがある（詳しくはmemo.mdに）
+	DNSAnswers           []string `json:"dns_answers,omitempty"`         // DNSから返答があったIPアドレス
+	DNSQueryTypeCode     int      `json:"dns_query_type_code,omitempty"` // 特定のdns query typeにgopacketが対応していないことがあるのでそれ対策
 	Message              string   `json:"message,omitempty"`
 	Error                string   `json:"error,omitempty"` // errorが出たら出力
 }
