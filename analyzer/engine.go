@@ -231,11 +231,19 @@ func packetToEvent(packet gopacket.Packet) Event {
 					}
 				}
 				event.Layers = append(event.Layers, "DNS")
+				event.Observations = append(event.Observations, "dns_observed")
 				event.DNSIsResponse = dns.QR // false: DNS query, true: DNS response　QRはquestion or response だね
+
 				if len(dns.Questions) > 0 {
-					event.DNSQuery = string(dns.Questions[0].Name)
-					event.DNSQueryType = dnsTypeName(dns.Questions[0].Type)
-					event.DNSQueryTypeCode = int(dns.Questions[0].Type)
+					event.Observations = append(event.Observations, "dns_query_observed")
+
+					query := dns.Questions[0]
+					event.DNSQuery = string(query.Name)
+					event.DNSQueryType = dnsTypeName(query.Type)
+					event.DNSQueryTypeCode = int(query.Type)
+				}
+				if dns.QR {
+					event.Observations = append(event.Observations, "dns_response_observed")
 				}
 				if len(dns.Answers) > 0 {
 					for _, answer := range dns.Answers {

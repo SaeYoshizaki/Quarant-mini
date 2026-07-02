@@ -27,6 +27,7 @@ type Event struct {
 	DNSIsResponse        bool     `json:"dns_is_response"`       // DNSには何を調べたいかのタイプがある（詳しくはmemo.mdに）
 	DNSAnswers           []string `json:"dns_answers,omitempty"` // DNSから返答があったIPアドレス
 	DNSAnswerType        []string `json:"dns_answer_type,omitempty"`
+	Observations         []string `json:"observation,omitempty"`
 	DNSQueryTypeCode     int      `json:"dns_query_type_code,omitempty"` // 特定のdns query typeにgopacketが対応していないことがあるのでそれ対策
 	Message              string   `json:"message,omitempty"`
 	Error                string   `json:"error,omitempty"` // errorが出たら出力
