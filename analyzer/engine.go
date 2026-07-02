@@ -239,8 +239,12 @@ func packetToEvent(packet gopacket.Packet) Event {
 				}
 				if len(dns.Answers) > 0 {
 					for _, answer := range dns.Answers {
+						event.DNSAnswerType = append(event.DNSAnswerType, dnsTypeName(answer.Type))
 						if answer.IP != nil {
 							event.DNSAnswers = append(event.DNSAnswers, answer.IP.String())
+						}
+						if len(answer.CNAME) > 0 {
+							event.DNSAnswers = append(event.DNSAnswers, string(answer.CNAME))
 						}
 					}
 				}
