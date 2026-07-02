@@ -147,6 +147,7 @@ func packetToEvent(packet gopacket.Packet) Event {
 			strings.HasPrefix(payload, "HEAD ") {
 			event.Layers = append(event.Layers, "HTTP")
 			event.Service = "http"
+			event.Risk = append(event.Risk, "http_plaintext")
 
 			firstLine := strings.SplitN(payload, "\r\n", 2)[0]
 			// payloadの一行目の改行(\r\n)までと二行目以降で分けて、その一つ目(一行目の開業まで)を取得している
@@ -178,7 +179,7 @@ func packetToEvent(packet gopacket.Packet) Event {
 				}
 			}
 			if len(event.HTTPSensitiveHeaders) > 0 {
-				event.Risk = "http_sensitive_header"
+				event.Risk = append(event.Risk, "http_sensitive_header")
 			}
 		}
 		event.LocalPort, event.RemotePort = localRemotePort(event.Direction, event.SrcPort, event.DstPort)

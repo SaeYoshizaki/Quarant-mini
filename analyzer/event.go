@@ -16,12 +16,12 @@ type Event struct {
 	LocalPort            string   `json:"local_port,omitempty"` // localIPに対応するポート
 	RemotePort           string   `json:"remote_port,omitempty"`
 	Service              string   `json:"service,omitempty"` // ポートのサービス(http, telnetとか)
-	Risk                 string   `json:"risk,omitempty"`
 	HTTPMethod           string   `json:"http_method,omitempty"`
 	HTTPPath             string   `json:"http_path,omitempty"`
 	HTTPHost             string   `json:"http_host,omitempty"`
 	HTTPUserAgent        string   `json:"http_user_agent,omitempty"`
-	HTTPSensitiveHeaders []string `josn:"http_sensitive_headers,omitempty"`
+	HTTPSensitiveHeaders []string `json:"http_sensitive_headers,omitempty"`
+	Risk                 []string `json:"risk,omitempty"`
 	DNSQuery             string   `json:"dns_query,omitempty"` // DNS response: true, DNS query: false
 	DNSQueryType         string   `json:"dns_query_type,omitempty"`
 	DNSIsResponse        bool     `json:"dns_is_response"`       // DNSには何を調べたいかのタイプがある（詳しくはmemo.mdに）
