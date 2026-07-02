@@ -84,6 +84,29 @@ func (e *Engine) Run() []Event {
 	return events
 }
 
+func dnsTypeName(t layers.DNSType) string {
+	switch int(t) {
+	case 1:
+		return "A"
+	case 28:
+		return "AAAA"
+	case 5:
+		return "CNAME"
+	case 15:
+		return "MX"
+	case 16:
+		return "TXT"
+	case 33:
+		return "SRV"
+	case 64:
+		return "SVCB"
+	case 65:
+		return "HTTPS"
+	default:
+		return t.String()
+	}
+}
+
 func packetToEvent(packet gopacket.Packet) Event {
 	ipLayer := packet.Layer(layers.LayerTypeIPv4)
 	if ipLayer == nil {
@@ -211,7 +234,7 @@ func packetToEvent(packet gopacket.Packet) Event {
 				event.DNSIsResponse = dns.QR // false: DNS query, true: DNS response　QRはquestion or response だね
 				if len(dns.Questions) > 0 {
 					event.DNSQuery = string(dns.Questions[0].Name)
-					event.DNSQueryType = dns.Questions[0].Type.String()
+					event.DNSQueryType = dnsTypeName(dns.Questions[0].Type)
 					event.DNSQueryTypeCode = int(dns.Questions[0].Type)
 				}
 				if len(dns.Answers) > 0 {
